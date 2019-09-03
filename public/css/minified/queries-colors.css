@@ -1,0 +1,34 @@
+/* xl */
+@media (max-width: 1999px) {
+    body {
+        background: pink;
+    }
+}
+
+/* lg */
+@media (max-width: 991px) {
+    body {
+        background: blue;
+    }
+}
+
+/* md */
+@media (max-width: 767px) {
+    body {
+        background: green;
+    }
+}
+
+/* sm */
+@media (max-width: 575px) {
+    body {
+        background: black;
+    }
+}
+
+/* xs */
+@media (max-width: 450px) {
+    body {
+        background: red;
+    }
+}

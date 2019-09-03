@@ -1,0 +1,14 @@
+/* xl */
+@media (max-width: 1999px) {}
+
+/* lg */
+@media (max-width: 991px) {}
+
+/* md */
+@media (max-width: 767px) {}
+
+/* sm */
+@media (max-width: 575px) {}
+
+/* xs */
+@media (max-width: 450px) {}
