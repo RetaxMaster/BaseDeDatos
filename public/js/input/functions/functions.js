@@ -61,6 +61,8 @@ const functions = {
                         }
                         else {
                             console.log("Status: ", this.status);
+                            console.log(this.responseText);
+                            
                             reject("Request failed.");
                         }
                     }

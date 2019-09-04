@@ -1,5 +1,9 @@
 @extends('../template/template')
 
+@section('scripts')
+    <script src="{{ asset(env("js")."output/admin.bundle.js") }}"></script>
+@endsection
+
 @section('content')
 
 <div class="row mb-5">
@@ -66,13 +70,13 @@
             <div class="form-group col-5">
                 <label for="Table">¿En qué tabla quieres importar?</label>
                 <select class="form-control" id="Table">
-                <option value="1">Claro</option>
-                <option value="2">Galicia</option>
-                <option value="3">Jubilados</option>
-                <option value="4">Macro</option>
-                <option value="5">Movistar</option>
-                <option value="6">Obras sociales</option>
-                <option value="7">Personal</option>
+                    <option value="1">Claro</option>
+                    <option value="2">Galicia</option>
+                    <option value="3">Jubilados</option>
+                    <option value="4">Macro</option>
+                    <option value="5">Movistar</option>
+                    <option value="6">Obras sociales</option>
+                    <option value="7">Personal</option>
                 </select>
             </div>
             <div class="col-7"></div>
@@ -82,7 +86,11 @@
             </div>
         </form>
 
-        <button type="button" class="btn btn-primary">Importar</button>
+        <button type="button" class="btn btn-primary" id="Import">Importar</button>
+
+        <div class="progress mt-4 hide" id="progress">
+            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">0%</div>
+        </div>
     </div>
     
 </div>

@@ -40,8 +40,10 @@
         @yield('content')
     </div>
 
+    @routes
     <script src="{{ asset(env("js")."lib/bootstrap.min.js") }}"></script>
     <script src="{{ asset(env("js")."lib/all.min.js") }}"></script>
+    <script src="{{ asset(env("js")."lib/modifiers.js") }}"></script>
     @yield('scripts', "")
 </body>
 </html>

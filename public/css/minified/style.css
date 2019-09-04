@@ -65,6 +65,10 @@ p {
     color: #808080;
 }
 
+.hide {
+    display: none;
+}
+
 .title {
     color: #808080;
     font-size: 2em;
