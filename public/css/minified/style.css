@@ -1,0 +1,78 @@
+/* Sobreescribiendo los estilos de bootstrap */
+
+.card {
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, .08), 0 2px 4px 0 rgba(0, 0, 0, .12);
+    border-radius: 3px;
+    background: #fff;
+    border: none;
+}
+
+.card-body {
+    padding: 30px 50px;
+}
+
+.btn {
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    -o-border-radius: 3px;
+}
+
+.btn-primary:not(:disabled):not(.disabled).active,
+.btn-primary:not(:disabled):not(.disabled):active,
+.show>.btn-primary.dropdown-toggle {
+    color: #fff;
+    background-color: #32b5f1;
+    border-color: #24b1f3;
+}
+
+.btn.btn-primary {
+    background: #2B9FD6;
+    border: none;
+    padding: 8px 20px;
+}
+
+.btn-primary.focus,
+.btn-primary:focus {
+    box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, .5);
+}
+
+.custom-control-label::before,
+.custom-control-label::after {
+    top: 1px;
+}
+
+/* ->Sobreescribiendo los estilos de bootstrap */
+
+/* Estilos generales */
+
+body {
+    font-family: "Lato";
+}
+
+label {
+    cursor: pointer;
+}
+
+p {
+    color: #808080;
+}
+
+.tag, label {
+    font-size: 13px;
+    font-weight: bold;
+    color: #808080;
+}
+
+.title {
+    color: #808080;
+    font-size: 2em;
+}
+
+.margin-grid {
+    margin: 0 140px;
+}
+
+
+/* ->Estilos generales */
