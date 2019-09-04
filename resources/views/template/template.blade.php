@@ -8,6 +8,7 @@
     <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset(env("css")."bootstrap.min.css") }}">
     <link rel="stylesheet" href="{{ asset(env("css")."style.css") }}">
+    <link rel="stylesheet" href="{{ asset(env("css")."queries.css") }}">
     @yield('css', "")
     <title>@yield('title', "Base de datos")</title>
 </head>
