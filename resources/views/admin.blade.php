@@ -75,7 +75,7 @@
             </div>
         </form>
 
-        <button type="submit" class="btn btn-primary">Importar</button>
+        <button type="button" class="btn btn-primary">Importar</button>
     </div>
     
 </div>
