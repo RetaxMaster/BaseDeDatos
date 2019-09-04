@@ -18,13 +18,15 @@ class CreatePersonalsTable extends Migration
             $table->string("linea");
             $table->string("producto");
             $table->string("tipo_doc");
-            $table->string("doc");
+            /* $table->string("documento"); */
+            $table->bigInteger("persona")->unsigned(); // <- Foreign
             $table->string("provincia");
             $table->string("localidad");
-            $table->string("nombre");
+            /* $table->string("nombre"); */
             $table->string("domicilio");
             $table->string("cp");
             $table->timestamps();
+            $table->foreign("persona")->references("id")->on("personas");
         });
     }
 

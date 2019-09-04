@@ -15,6 +15,8 @@ class CreateObrasSocialesTable extends Migration
     {
         Schema::create('obras_sociales', function (Blueprint $table) {
             $table->bigIncrements('id');
+            /* $table->string("documento"); */
+            $table->bigInteger("persona")->unsigned(); // <- Foreign
             $table->string("CuilTitular");
             $table->string("CuilTitularCodOS");
             $table->string("CuilTitularOS");
@@ -44,6 +46,7 @@ class CreateObrasSocialesTable extends Migration
             $table->string("CuilTitularTEL");
             $table->string("CuilRelacionadoTEL");
             $table->timestamps();
+            $table->foreign("persona")->references("id")->on("personas");
         });
     }
 

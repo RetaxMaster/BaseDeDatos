@@ -15,9 +15,10 @@ class CreateMacrosTable extends Migration
     {
         Schema::create('macros', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string("documento");
+            /* $table->string("documento");
             $table->string("apellido");
-            $table->string("nombre");
+            $table->string("nombre"); */
+            $table->bigInteger("persona")->unsigned(); // <- Foreign
             $table->char("sexo");
             $table->string("clase");
             $table->string("domicilio");
@@ -58,6 +59,7 @@ class CreateMacrosTable extends Migration
             $table->string("fecha_nac");
             $table->string("email");
             $table->timestamps();
+            $table->foreign("persona")->references("id")->on("personas");
         });
     }
 

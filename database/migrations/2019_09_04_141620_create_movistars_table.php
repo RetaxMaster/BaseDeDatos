@@ -18,10 +18,11 @@ class CreateMovistarsTable extends Migration
             $table->string("idcontrato");
             $table->string("imei");
             $table->string("tipodoc");
-            $table->string("numerodoc");
+            /* $table->string("documento"); */
+            $table->bigInteger("persona")->unsigned(); // <- Foreign
             $table->string("cuil");
-            $table->string("nombre");
-            $table->string("apellido");
+            /* $table->string("nombre");
+            $table->string("apellido"); */
             $table->string("sexo");
             $table->string("idcliente");
             $table->string("alias");
@@ -36,6 +37,7 @@ class CreateMovistarsTable extends Migration
             $table->string("cp");
             $table->string("cpa");
             $table->timestamps();
+            $table->foreign("persona")->references("id")->on("personas");
         });
     }
 

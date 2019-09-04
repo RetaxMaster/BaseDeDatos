@@ -20,20 +20,20 @@ class CreateClarosTable extends Migration
             $table->string("c2");
             $table->string("c3");
             $table->string("c4");
-            $table->string("nombres");
+            /* $table->string("nombres");
             $table->string("apellido");
-            $table->string("nombre");
+            $table->string("nombre"); */
             $table->string("calle");
             $table->string("nro");
             $table->string("piso");
             $table->string("dto");
-            $table->string("nro");
             $table->string("localidad");
             $table->string("cp1");
             $table->string("cp2");
             $table->string("c15");
             $table->string("cuit");
-            $table->string("documento");
+            /* $table->string("documento"); */
+            $table->bigInteger("persona")->unsigned(); // <- Foreign
             $table->string("c18");
             $table->string("c19");
             $table->string("c20");
@@ -42,6 +42,7 @@ class CreateClarosTable extends Migration
             $table->string("c23");
             $table->string("c24");
             $table->timestamps();
+            $table->foreign("persona")->references("id")->on("personas");
         });
     }
 

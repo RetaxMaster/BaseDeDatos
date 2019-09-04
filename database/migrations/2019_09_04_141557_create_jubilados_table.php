@@ -18,9 +18,10 @@ class CreateJubiladosTable extends Migration
             $table->string("titular_cuilbenef");
             $table->string("titular_cuilbenef_rep");
             $table->string("titular_nrobeneficio");
-            $table->string("titular_apellidonombre");
+            /* $table->string("titular_apellidonombre"); */
             $table->string("titular_tipodoc");
-            $table->string("titular_nrodoc");
+            /* $table->string("documento"); */
+            $table->bigInteger("persona")->unsigned(); // <- Foreign
             $table->string("titular_pciadoc");
             $table->string("titular_fechanac");
             $table->char("titular_sexo");
@@ -62,6 +63,7 @@ class CreateJubiladosTable extends Migration
             $table->decimal("titular_bruto");
             $table->decimal("titular_neto");
             $table->timestamps();
+            $table->foreign("persona")->references("id")->on("personas");
         });
     }
 

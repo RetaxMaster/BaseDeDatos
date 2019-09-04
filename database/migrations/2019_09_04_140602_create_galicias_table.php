@@ -16,11 +16,13 @@ class CreateGaliciasTable extends Migration
         Schema::create('galicias', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string("telefono");
-            $table->string("nombres");
-            $table->string("documento");
+            /* $table->string("nombres");
+            $table->string("documento"); */
+            $table->bigInteger("persona")->unsigned(); // <- Foreign
             $table->string("tel_fijo");
             $table->decimal("importe");
             $table->timestamps();
+            $table->foreign("persona")->references("id")->on("personas");
         });
     }
 

@@ -64,14 +64,21 @@
 
         <form action="#" class="row">
             <div class="form-group col-5">
-                <label for="Table">¿En qué tabala quieres importar?</label>
+                <label for="Table">¿En qué tabla quieres importar?</label>
                 <select class="form-control" id="Table">
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
+                <option value="1">Claro</option>
+                <option value="2">Galicia</option>
+                <option value="3">Jubilados</option>
+                <option value="4">Macro</option>
+                <option value="5">Movistar</option>
+                <option value="6">Obras sociales</option>
+                <option value="7">Personal</option>
                 </select>
+            </div>
+            <div class="col-7"></div>
+            <div class="form-group col-5">
+                <label for="file">Selecciona el archivo:</label>
+                <input type="file" class="form-control-file" name="ExcelFile" id="ExcelFile">
             </div>
         </form>
 
