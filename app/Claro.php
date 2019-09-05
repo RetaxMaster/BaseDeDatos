@@ -13,4 +13,12 @@ class Claro extends Model {
         DB::table("claros")->truncate();
         DB::statement("SET FOREIGN_KEY_CHECKS = 1;");
     }
+
+    // Relaciones
+    
+    public function personinfo() {
+        return $this->belongsTo(Personas::class, 'persona');
+    }
+    
+    // -> Relaciones
 }

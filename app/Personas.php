@@ -4,6 +4,13 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use App\Claro;
+use App\Galicia;
+use App\Jubilados;
+use App\Macro;
+use App\Movistar;
+use App\ObrasSociales;
+use App\Personal;
 
 class Personas extends Model {
     protected $fillable = ["documento", "nombre", "apellidos"];
@@ -49,4 +56,36 @@ class Personas extends Model {
         DB::table("personas")->truncate();
         DB::statement("SET FOREIGN_KEY_CHECKS = 1;");
     }
+
+    // Relaciones
+    
+    public function claros() {
+        return $this->hasMany(Claro::class, "persona");
+    }
+
+    public function galicias() {
+        return $this->hasMany(Galicia::class, "persona");
+    }
+
+    public function jubilados() {
+        return $this->hasMany(Jubilados::class, "persona");
+    }
+
+    public function macros() {
+        return $this->hasMany(Macro::class, "persona");
+    }
+
+    public function movistars() {
+        return $this->hasMany(Movistar::class, "persona");
+    }
+
+    public function obras_sociales() {
+        return $this->hasMany(ObrasSociales::class, "persona");
+    }
+
+    public function personals() {
+        return $this->hasMany(Personal::class, "persona");
+    }
+    
+    // -> Relaciones
 }
