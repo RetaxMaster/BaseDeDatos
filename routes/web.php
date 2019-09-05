@@ -11,6 +11,8 @@
 |
 */
 
+Route::get('/test', 'DataController@test')->name('test');
+
 Route::get('/', 'DataController@showSearch')->name('home');
 
 Route::get('admin', 'DataController@showAdminPanel')->name('admin');
