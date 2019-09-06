@@ -146,18 +146,20 @@ class DataController extends Controller {
 
         //Obtengo las columnas de esa tabla, y quito a la columna persona
         $columns = Schema::getColumnListing($schema);
+        unset($columns[array_search("id", $columns)]);
         unset($columns[array_search("persona", $columns)]);
+        unset($columns[array_search("created_at", $columns)]);
+        unset($columns[array_search("updated_at", $columns)]);
         $columns = array_values($columns);
 
         //Armo la consulta de Eloqeunt por medio de un string
         $eloquentQuery = '$results = '."App\\$model::";
 
-        for ($i=0; $i < count($columns); $i++) { 
+        for ($i=0; $i < count($columns); $i++) {
             if ($i != 0)
                 $eloquentQuery .= "->orWhere('$columns[$i]', 'like', '%$query%')";
             else
                 $eloquentQuery .= "where('$columns[$i]', 'like', '%$query%')";
-            $i++;
         }
 
         $putLimit = $limit == null ? "" : "limit($limit)->";
@@ -166,8 +168,12 @@ class DataController extends Controller {
         //Evaluo la consulta como codigo PHP
         eval($eloquentQuery);
 
-        //A partir de aquí ya tengo los datos
-        return json_encode($results);
+        //A partir de aquí ya tengo los datos y preparo la respuesta
+        $response["status"] = "true";
+        $response["headers"] = $columns;        
+        $response["rows"] = $results;
+        $response["eloquentQuery"] = $eloquentQuery;
+        return json_encode($response);
 
         
     }

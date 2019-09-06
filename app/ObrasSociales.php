@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
 class ObrasSociales extends Model {
-    protected $fillable = ["persona", "CuilTitular", "CuilTitularCodOS", "CuilTitularOS", "PeriodoDesde", "CuilTitularSexo", "CuilTitularFechaNacimiento", "CuilTitularCalle", "CuilTitularNro", "CuilTitularPiso", "CuilTitularDpto", "CuilTitularCodPostal", "CuilTitularLocalidad", "CuilTitularPcia", "CuilRelacionado", "Relacion", "CuilRelacionadoApeNom", "CuilRelacionadoSexo", "CuilRelacionadoFechaNacimiento", "CuilRelacionadoCalle", "CuilRelacionadoNro", "CuilRelacionadoPiso", "CuilRelacionadoDepto", "CuilRelacionadoCodPostal", "CuilRelacionadoLocalidad", "CuilRelacionadoPcia", "CuilTitularTEL", "CuilRelacionadoTEL"];    
+    protected $fillable = ["persona", "CuilTitular", "CuilTitularCodOS", "CuilTitularOS", "PeriodoDesde", "CuilTitularSexo", "CuilTitularFechaNacimiento", "CuilTitularCalle", "CuilTitularNro", "CuilTitularPiso", "CuilTitularDpto", "CuilTitularCodPostal", "CuilTitularLocalidad", "CuilTitularPcia", "CuilRelacionado", "Relacion", "CuilRelacionadoApeNom", "CuilRelacionadoSexo", "CuilRelacionadoFechaNacimiento", "CuilRelacionadoCalle", "CuilRelacionadoNro", "CuilRelacionadoPiso", "CuilRelacionadoDepto", "CuilRelacionadoCodPostal", "CuilRelacionadoLocalidad", "CuilRelacionadoPcia", "CuilTitularTEL", "CuilRelacionadoTEL"];
+    protected $hidden = ["id", "persona", "created_at", "updated_at"];
 
     public static function truncate() {
         DB::statement("SET FOREIGN_KEY_CHECKS = 0;");
