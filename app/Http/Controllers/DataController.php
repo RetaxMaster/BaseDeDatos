@@ -17,6 +17,12 @@ use App\Personal;
 use App\Personas;
 
 use App\Imports\ClaroImport;
+use App\Imports\GaliciaImport;
+use App\Imports\JubiladosImport;
+use App\Imports\MacroImport;
+use App\Imports\MovistarImport;
+use App\Imports\ObrasSocialesImport;
+use App\Imports\PersonalImport;
 
 class DataController extends Controller {
 
@@ -117,7 +123,6 @@ class DataController extends Controller {
 
     //Test Route
     public function test() {
-
     }
 
 }

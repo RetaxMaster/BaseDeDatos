@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Personal extends Model {
     protected $fillable = ["linea", "producto", "tipo_doc", "persona", "provincia", "localidad", "domicilio", "cp"];

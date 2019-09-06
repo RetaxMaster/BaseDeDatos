@@ -21,7 +21,7 @@ class CreateObrasSocialesTable extends Migration
             $table->string("CuilTitularCodOS");
             $table->string("CuilTitularOS");
             $table->string("PeriodoDesde");
-            $table->string("CuilTitularApeNom");
+            /* $table->string("CuilTitularApeNom"); */
             $table->string("CuilTitularSexo");
             $table->string("CuilTitularFechaNacimiento");
             $table->string("CuilTitularCalle");

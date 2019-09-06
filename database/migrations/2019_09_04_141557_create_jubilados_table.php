@@ -24,11 +24,11 @@ class CreateJubiladosTable extends Migration
             $table->bigInteger("persona")->unsigned(); // <- Foreign
             $table->string("titular_pciadoc");
             $table->string("titular_fechanac");
-            $table->char("titular_sexo");
+            $table->string("titular_sexo");
             $table->string("titular_calle");
             $table->string("titular_callenro");
-            $table->integer("titular_piso");
-            $table->integer("titular_deptooficina");
+            $table->string("titular_piso");
+            $table->string("titular_deptooficina");
             $table->string("titular_localidad");
             $table->integer("titular_pcia");
             $table->string("titular_provincia");
@@ -60,8 +60,8 @@ class CreateJubiladosTable extends Migration
             $table->string("apoderado_pcia");
             $table->string("apoderado_provincia");
             $table->string("apoderado_codpos");
-            $table->decimal("titular_bruto");
-            $table->decimal("titular_neto");
+            $table->string("titular_bruto");
+            $table->string("titular_neto");
             $table->timestamps();
             $table->foreign("persona")->references("id")->on("personas");
         });

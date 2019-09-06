@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Galicia extends Model {
     protected $fillable = ["telefono", "persona", "tel_fijo", "importe"];
