@@ -55,6 +55,10 @@ label {
     cursor: pointer;
 }
 
+table {
+    text-align: center;
+}
+
 p {
     color: #808080;
 }
@@ -87,3 +91,50 @@ p {
 
 
 /* ->Estilos generales */
+
+/* Loader */
+
+#loading,
+.loading {
+    color: #696969;
+    text-align: center;
+}
+
+#loading .preloader,
+.loading .preloader {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    border: 5px solid #eee;
+    border-top: 5px solid #666;
+    border-radius: 50%;
+    animation-duration: 1.5s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    animation-name: loading;
+}
+
+#loading .tag,
+.loading .tag {
+    font-size: 12px;
+    display: inline-block;
+    width: 100%;
+}
+
+.loading-hidden {
+    display: none;
+}
+
+@keyframes loading {
+
+    0% {
+        transform: rotateZ(0);
+    }
+
+    100% {
+        transform: rotateZ(360deg);
+    }
+
+}
+
+/* ->Loader */

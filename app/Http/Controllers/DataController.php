@@ -132,34 +132,65 @@ class DataController extends Controller {
         $limit = request("limit");
         $inner = request("inner");
 
+        return json_encode(self::searchData($query, $table, $limit, $inner));
+    }
+
+    public static function searchData($query, $table, $limit, $inner) {
         //Reviso en qué tabla se está buscando
         switch ($table) {
-            case 1: $schema = "claros"; $model = "Claro"; break;
-            case 2: $schema = "galicias"; $model = "Galicia"; break;
-            case 3: $schema = "jubilados"; $model = "Jubilados"; break;
-            case 4: $schema = "macros"; $model = "Macro"; break;
-            case 5: $schema = "movistars"; $model = "Movistar"; break;
-            case 6: $schema = "obras_sociales"; $model = "ObrasSociales"; break;
-            case 7: $schema = "personals"; $model = "Personal"; break;
+            case 1: $schema = "claros"; $prefix = "Claro"; break;
+            case 2: $schema = "galicias"; $prefix = "Galicia"; break;
+            case 3: $schema = "jubilados"; $prefix = "Jubilados"; break;
+            case 4: $schema = "macros"; $prefix = "Macro"; break;
+            case 5: $schema = "movistars"; $prefix = "Movistar"; break;
+            case 6: $schema = "obras_sociales"; $prefix = "ObrasSociales"; break;
+            case 7: $schema = "personals"; $prefix = "Personal"; break;
             default: $schema = null; break;
         }
 
         //Obtengo las columnas de esa tabla, y quito a la columna persona
-        $columns = Schema::getColumnListing($schema);
-        unset($columns[array_search("id", $columns)]);
-        unset($columns[array_search("persona", $columns)]);
-        unset($columns[array_search("created_at", $columns)]);
-        unset($columns[array_search("updated_at", $columns)]);
-        $columns = array_values($columns);
+        $columns = self::getColumns($schema, $prefix, false);
 
+        //Obtengo las columnas de la tabla persona
+        $columnsPersonas = Schema::getColumnListing("personas");
+        unset($columnsPersonas[array_search("id", $columnsPersonas)]);
+        unset($columnsPersonas[array_search("created_at", $columnsPersonas)]);
+        unset($columnsPersonas[array_search("updated_at", $columnsPersonas)]);
+        $columnsPersonas = array_values($columnsPersonas);
+
+        //Junto ambas
+        $columns = array_merge($columnsPersonas, $columns); // <- Columnas en las que quiero que busque (Array) porque lo recorremos para formar los where
+        $columnsToSelect = implode("', '", $columns); // <- Columnas que quiero que me seleccione (string separado por comas)
+        
         //Armo la consulta de Eloqeunt por medio de un string
-        $eloquentQuery = '$results = '."App\\$model::";
+        
+        // Si el usuario decidió unirlas
+        $innerTables = "";
+        if ($inner) {
+            $userInner = self::innerTables($table, $columnsToSelect);
+            $innerTables = $userInner["innerTables"];
+            $columnsToSelect = $userInner["columns"];
+        }
+        // ->Si el usuario decidió unirlas
+
+        // Armo la variable que contendrá los headers
+        $headers = explode("', '", $columnsToSelect);
+        for ($i=0; $i < count($headers); $i++) { 
+            $explode = explode(" AS ", $headers[$i]);
+            $headers[$i] = array_pop($explode);
+            $explode  = explode(".", $headers[$i]);
+            $headers[$i] = array_pop($explode);
+        }
+        // -> Armo la variable que contendrá los headers
+
+        //Aquí inicia la consulta
+        $eloquentQuery = '$results = '."App\\Personas::select('$columnsToSelect')->leftjoin('$schema', 'personas.id', '=', '$schema.persona')$innerTables";
 
         for ($i=0; $i < count($columns); $i++) {
             if ($i != 0)
-                $eloquentQuery .= "->orWhere('$columns[$i]', 'like', '%$query%')";
+                $eloquentQuery .= "\n\t\t->orWhere('$columns[$i]', 'like', '%$query%')";
             else
-                $eloquentQuery .= "where('$columns[$i]', 'like', '%$query%')";
+                $eloquentQuery .= "\n\t\t->where('$columns[$i]', 'like', '%$query%')";
         }
 
         $putLimit = $limit == null ? "" : "limit($limit)->";
@@ -169,18 +200,95 @@ class DataController extends Controller {
         eval($eloquentQuery);
 
         //A partir de aquí ya tengo los datos y preparo la respuesta
+
+        //Respuesta para el sistema
         $response["status"] = "true";
-        $response["headers"] = $columns;        
+        $response["headers"] = $headers;        
         $response["rows"] = $results;
         $response["eloquentQuery"] = $eloquentQuery;
-        return json_encode($response);
+        return $response;
 
+        //respuesta para test
+        /* return [
+            "results" => $results->toArray(),
+            "query" => $eloquentQuery
+        ]; */
+    }
+
+    //Este metodo junta las tablas
+    public static function innerTables($table, $columnsToSelect) {
+        $innerTables = "";
+        $columnsToSelect = explode("', '", $columnsToSelect);
+        if ($table != 1) {
+            $innerTables .= "->leftjoin('claros', 'personas.id', '=', 'claros.persona')";
+            $columnsToSelect = array_merge($columnsToSelect, self::getColumns("claros", "Claro"));
+        }
+        if ($table != 2) {
+            $innerTables .= "->leftjoin('galicias', 'personas.id', '=', 'galicias.persona')";
+            $columnsToSelect = array_merge($columnsToSelect, self::getColumns("galicias", "Galicia"));
+        }
+        if ($table != 3) {
+            $innerTables .= "->leftjoin('jubilados', 'personas.id', '=', 'jubilados.persona')";
+            $columnsToSelect = array_merge($columnsToSelect, self::getColumns("jubilados", "Jubilados"));
+        }
+        if ($table != 4) {
+            $innerTables .= "->leftjoin('macros', 'personas.id', '=', 'macros.persona')";
+            $columnsToSelect = array_merge($columnsToSelect, self::getColumns("macros", "Macro"));
+        }
+        if ($table != 5) {
+            $innerTables .= "->leftjoin('movistars', 'personas.id', '=', 'movistars.persona')";
+            $columnsToSelect = array_merge($columnsToSelect, self::getColumns("movistars", "Movistar"));
+        }
+        if ($table != 6) {
+            $innerTables .= "->leftjoin('obras_sociales', 'personas.id', '=', 'obras_sociales.persona')";
+            $columnsToSelect = array_merge($columnsToSelect, self::getColumns("obras_sociales", "ObrasSociales"));
+        }
+        if ($table != 7) {
+            $innerTables .= "->leftjoin('personals', 'personas.id', '=', 'personals.persona')";
+            $columnsToSelect = array_merge($columnsToSelect, self::getColumns("personals", "Personal"));
+        }
+
+        return [
+            "innerTables" => $innerTables,
+            "columns" => implode("', '", $columnsToSelect)
+        ];
+    }
+
+    //Este método obtiene las columnas de una tabla y retorna la lista para el select
+    public static function getColumns($tableName, $prefix, $putAs = true) {
+        $columns = Schema::getColumnListing($tableName);
+        unset($columns[array_search("id", $columns)]);
+        unset($columns[array_search("persona", $columns)]);
+        unset($columns[array_search("created_at", $columns)]);
+        unset($columns[array_search("updated_at", $columns)]);
+        $columns = array_values($columns);
+        
+        //Sobreescribo los nombres de las columnas para agregar un AS para evitar columnas duplicadas en las tablas al hacer el inner join
+
+        
+        for ($i=0; $i < count($columns); $i++) {
+            $as = $putAs ? " AS $prefix" . ucfirst($columns[$i]) : "";
+            $columns[$i] = "$tableName." . $columns[$i] . $as;
+        }
+
+        return $columns;
         
     }
 
     //Test Route
     public function test() {
-        
+        $query = "25585211";
+        $table = 1;
+        $limit = null;
+        $inner = true;
+
+        $data = self::searchData($query, $table, $limit, $inner);
+
+        echo "<pre>";
+        var_dump($data["query"]);
+        echo "</pre>";
+        dd($data["results"]);
+
     }
 
 }

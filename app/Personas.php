@@ -14,6 +14,7 @@ use App\Personal;
 
 class Personas extends Model {
     protected $fillable = ["documento", "nombre", "apellidos"];
+    protected $hidden = ["id", "created_at", "updated_at"];
 
     public static function add($documento, $nombre, $apellido = null) {
         if ($apellido == null) {

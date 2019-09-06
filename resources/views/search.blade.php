@@ -38,6 +38,12 @@
                         </div>
                     </div>
                 </form>
+                <div class="loading-container loading-hidden" id="Searching">
+                    <div class="loading">
+                        <div class="preloader"></div>
+                        <span class="tag">Buscando...</span>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="col-12 card mt-4">
@@ -46,32 +52,13 @@
                     <table class="table">
                         <thead class="thead-dark">
                             <tr id="headers">
-                                <th scope="col">#</th>
-                                <th scope="col">First</th>
-                                <th scope="col">Last</th>
-                                <th scope="col">Handle</th>
+                                <th scope="col">Aquí</th>
+                                <th scope="col">aparecerán</th>
+                                <th scope="col">los</th>
+                                <th scope="col">resultados</th>
                             </tr>
                         </thead>
-                        <tbody id="rows">
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>Jacob</td>
-                                <td>Thornton</td>
-                                <td>@mdo</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td>Larry</td>
-                                <td>the Bird</td>
-                                <td>@mdo</td>
-                            </tr>
-                        </tbody>
+                        <tbody id="rows"></tbody>
                     </table>
                 </div>
                 <div class="row justify-content-center mt-3">
