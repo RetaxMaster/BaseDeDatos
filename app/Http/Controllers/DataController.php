@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Schema;
+
 use App\Classes\RetaxMaster;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\DB;
 
 use App\Claro;
 use App\Galicia;
@@ -74,6 +77,7 @@ class DataController extends Controller {
         return json_encode($response);
     }
 
+    //Inserta los datos a partir del archivo de Excel
     public static function insertData($table, $file_path) {
         $response["status"] = true;
         switch ($table) {
@@ -121,8 +125,56 @@ class DataController extends Controller {
         return $response;
     }
 
+    //Hace las consultas
+    public function getData() {
+        $query = request("query");
+        $table = request("table");
+        $limit = request("limit");
+        $inner = request("inner");
+
+        //Reviso en qué tabla se está buscando
+        switch ($table) {
+            case 1: $schema = "claros"; $model = "Claro"; break;
+            case 2: $schema = "galicias"; $model = "Galicia"; break;
+            case 3: $schema = "jubilados"; $model = "Jubilados"; break;
+            case 4: $schema = "macros"; $model = "Macro"; break;
+            case 5: $schema = "movistars"; $model = "Movistar"; break;
+            case 6: $schema = "obras_sociales"; $model = "ObrasSociales"; break;
+            case 7: $schema = "personals"; $model = "Personal"; break;
+            default: $schema = null; break;
+        }
+
+        //Obtengo las columnas de esa tabla, y quito a la columna persona
+        $columns = Schema::getColumnListing($schema);
+        unset($columns[array_search("persona", $columns)]);
+        $columns = array_values($columns);
+
+        //Armo la consulta de Eloqeunt por medio de un string
+        $eloquentQuery = '$results = '."App\\$model::";
+
+        for ($i=0; $i < count($columns); $i++) { 
+            if ($i != 0)
+                $eloquentQuery .= "->orWhere('$columns[$i]', 'like', '%$query%')";
+            else
+                $eloquentQuery .= "where('$columns[$i]', 'like', '%$query%')";
+            $i++;
+        }
+
+        $putLimit = $limit == null ? "" : "limit($limit)->";
+        $eloquentQuery .= "->". $putLimit."get();";
+
+        //Evaluo la consulta como codigo PHP
+        eval($eloquentQuery);
+
+        //A partir de aquí ya tengo los datos
+        return json_encode($results);
+
+        
+    }
+
     //Test Route
     public function test() {
+        
     }
 
 }

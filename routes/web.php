@@ -19,6 +19,7 @@ Route::get('admin', 'DataController@showAdminPanel')->name('admin');
 
 Route::post('uploadFile', 'DataController@uploadFile')->name('uploadFile');
 
+Route::post('getData', 'DataController@getData')->name('getData');
 
 // Rutas de autenticación
 

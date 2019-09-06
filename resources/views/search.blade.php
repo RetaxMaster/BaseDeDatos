@@ -1,5 +1,9 @@
 @extends('../template/template')
 
+@section('scripts')
+    <script src="{{ asset(env("js")."output/search.bundle.js") }}"></script>    
+@endsection
+
 @section('content')
     <div class="row my-5">
         <div class="col-12 card">
@@ -11,7 +15,15 @@
                     </div>
                     <div class="form-group col-12 col-md-6">
                         <label for="table">¿En qué tabla quieres buscar?</label>
-                        <input type="text" class="form-control" placeholder="Se buscará por cualquier campo" id="table">
+                        <select class="form-control" id="table">
+                            <option value="1" selected>Claro</option>
+                            <option value="2">Galicia</option>
+                            <option value="3">Jubilados</option>
+                            <option value="4">Macro</option>
+                            <option value="5">Movistar</option>
+                            <option value="6">Obras sociales</option>
+                            <option value="7">Personal</option>
+                        </select>
                     </div>
                     <div class="form-group col-12 col-md-6">
                         <label for="limit">Cantidad de registros a traer</label>
