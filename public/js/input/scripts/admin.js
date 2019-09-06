@@ -24,7 +24,15 @@ document.addEventListener("DOMContentLoaded", () => {
             const request = await f.ajax(route("uploadFile").url(), "post", formData, "json", false, false, true);
 
             request.xhr.upload.addEventListener("progress", (event) => {
-                const porcentaje = Math.round((event.loaded / event.total) * 100);
+                const porcentaje = Math.round((event.loaded / event.total) * 50);
+                progressBar.classList.remove("hide");
+                progressBar.children[0].setAttribute("aria-valuenow", porcentaje);
+                progressBar.children[0].style.width = `${porcentaje}%`;
+                progressBar.children[0].textContent = `${porcentaje}%`;
+            });
+
+            request.xhr.addEventListener("progress", (event) => {
+                const porcentaje = Math.round((event.loaded / event.total) * 50) + 50;
                 progressBar.classList.remove("hide");
                 progressBar.children[0].setAttribute("aria-valuenow", porcentaje);
                 progressBar.children[0].style.width = `${porcentaje}%`;
@@ -36,7 +44,13 @@ document.addEventListener("DOMContentLoaded", () => {
             });
 
             const response = await request.success;
-            console.log(response);
+            
+            if (response.status == "true") {
+                swal("Listo", "Tabla importada con éxito", "success");                
+            }
+            else {
+                swal("Error", response.message, "error");
+            }
             
         }
         else {
