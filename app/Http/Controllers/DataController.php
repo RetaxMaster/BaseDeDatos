@@ -29,6 +29,11 @@ use App\Imports\PersonalImport;
 
 class DataController extends Controller {
 
+    public function __construct() {
+        $this->middleware("auth");
+        $this->middleware("admin", ["only" => ["showAdminPanel"]]);
+    }
+
     //Muestra el panel de administrador
     public function showAdminPanel() {
         return view("admin");

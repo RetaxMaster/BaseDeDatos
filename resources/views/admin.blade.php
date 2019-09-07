@@ -16,25 +16,24 @@
                 <div class="card-body">
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
-        
                         <div class="form-group">
                             <label for="username">Nombre de usuario:</label>
-                            <input id="username" type="text" class="form-control @error('user') is-invalid @enderror" name="username" value="{{ old('user') }}" required autofocus placeholder="Nombre de usuario">
+                            <input id="username" type="text" class="form-control @error('username') is-invalid @enderror" name="username" value="{{ old('user') }}" required autofocus placeholder="Nombre de usuario">
         
-                            @error('user')
+                            @error('username')
                                 <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
+                                    <strong>Este usuario ya existe}</strong>
                                 </span>
                             @enderror
                         </div>
 
                         <div class="form-group">
                             <label for="email">Correo:</label>
-                            <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autofocus placeholder="Correo">
+                            <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" required autofocus placeholder="Correo">
         
                             @error('email')
                                 <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
+                                    <strong>Este email ya existe</strong>
                                 </span>
                             @enderror
                         </div>
@@ -50,10 +49,23 @@
                             @enderror
                         </div>
 
+                        <div class="custom-control custom-switch custom-control-inline">
+                            <input type="checkbox" class="custom-control-input" id="MakeAdmin" value="1" name="MakeAdmin">
+                            <label class="custom-control-label" for="MakeAdmin">Hacer administrador</label>
+                        </div>
+
                         <div class="row justify-content-center">
                             <button type="submit" class="btn btn-primary">Registrar</button>
                         </div>
                     </form>
+                    @if(session()->has("registered"))
+                    <div class="alert alert-success alert-dismissible fade show col-12 mt-3" role="alert">
+                        <strong>{{ session("registered") }}</strong>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    @endif
                 </div>
             </div>
         </div>

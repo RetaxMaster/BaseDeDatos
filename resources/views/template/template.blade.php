@@ -25,11 +25,13 @@
             @if (auth()->user())      
             <div class="collapse navbar-collapse" id="nav">
                 <ul class="navbar-nav ml-auto">
+                    @if (auth()->user()->rol == 1)
                     <li class="nav-item active">
-                        <a class="nav-link" href="#">Panel de admin</a>
+                        <a class="nav-link" href="{{ route("admin") }}">Panel de admin</a>
                     </li>
+                    @endif
                     <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="fas fa-power-off"></i></a>
+                        <a class="nav-link" href="{{ route("logout") }}"><i class="fas fa-power-off"></i></a>
                     </li>
                 </ul>
             </div>
