@@ -24,23 +24,23 @@ document.addEventListener("DOMContentLoaded", () => {
             const request = await f.ajax(route("uploadFile").url(), "post", formData, "json", false, false, true);
 
             request.xhr.upload.addEventListener("progress", (event) => {
-                const porcentaje = Math.round((event.loaded / event.total) * 50);
+                const porcentaje = Math.round((event.loaded / event.total) * 100);
                 progressBar.classList.remove("hide");
-                progressBar.children[0].setAttribute("aria-valuenow", porcentaje);
-                progressBar.children[0].style.width = `${porcentaje}%`;
-                progressBar.children[0].textContent = `${porcentaje}%`;
-            });
+                progressBar.children[0].children[0].setAttribute("aria-valuenow", porcentaje);
+                progressBar.children[0].children[0].style.width = `${porcentaje}%`;
+                progressBar.children[0].children[0].textContent = `Archivo subido al ${porcentaje}%`;
 
-            request.xhr.addEventListener("progress", (event) => {
-                const porcentaje = Math.round((event.loaded / event.total) * 50) + 50;
-                progressBar.classList.remove("hide");
-                progressBar.children[0].setAttribute("aria-valuenow", porcentaje);
-                progressBar.children[0].style.width = `${porcentaje}%`;
-                progressBar.children[0].textContent = `${porcentaje}%`;
+                if (porcentaje >= 100) {
+                    FJ("#Processing").get(0).classList.remove("loading-hidden");
+                }
+            
+                window.scrollTo(0, document.body.scrollHeight);
+
             });
 
             request.xhr.addEventListener("load", () => {
                 progressBar.classList.add("hide");
+                FJ("#Processing").get(0).classList.add("loading-hidden");
             });
 
             const response = await request.success;

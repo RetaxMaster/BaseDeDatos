@@ -92,49 +92,21 @@ p {
 
 /* ->Estilos generales */
 
-/* Loader */
+/* Loader pequeño */
 
-#loading,
-.loading {
-    color: #696969;
-    text-align: center;
-}
-
-#loading .preloader,
-.loading .preloader {
-    display: inline-block;
-    width: 30px;
-    height: 30px;
-    border: 5px solid #eee;
-    border-top: 5px solid #666;
-    border-radius: 50%;
-    animation-duration: 1.5s;
-    animation-iteration-count: infinite;
-    animation-timing-function: linear;
-    animation-name: loading;
-}
-
-#loading .tag,
-.loading .tag {
-    font-size: 12px;
-    display: inline-block;
-    width: 100%;
-}
-
-.loading-hidden {
+.loading-container.loading-hidden {
     display: none;
 }
 
-@keyframes loading {
-
-    0% {
-        transform: rotateZ(0);
-    }
-
-    100% {
-        transform: rotateZ(360deg);
-    }
-
+.loading-container .preloader {
+    width: 30px !important;
+    height: 30px !important;
+    border: 5px solid #eee !important;
+    border-top: 5px solid #666 !important;
 }
 
-/* ->Loader */
+.loading .tag {
+    margin: 0 !important;
+}
+
+/* ->Loader pequeño */

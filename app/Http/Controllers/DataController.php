@@ -288,7 +288,14 @@ class DataController extends Controller {
         if($limit == null) $limit = "";
 
         $export = self::searchData($query, $table, $limit, $inner);
-        return Excel::download(new DataExport($export), 'Export.xlsx');
+        
+        $fileName = "Export.xlsx";
+        Excel::store(new DataExport($export), $fileName);
+        return $fileName;
+    }
+
+    public function download($fileName) {
+        return response()->download(storage_path("/app/$fileName"));
     }
 
     public static function getColumnLetter($num) {

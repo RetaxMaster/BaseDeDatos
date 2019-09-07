@@ -2,10 +2,13 @@ import events from "../functions/events";
 import FJ from "../functions/FamilyJewels";
 import f from "../functions/functions";
 import swal from 'sweetalert';
+import m from "../functions/modal";
+import { generalScripts } from "../scripts/scripts";
 
 const { eventAll, eventOne } = events;
 
 document.addEventListener("DOMContentLoaded", () => {
+    generalScripts();
 
     const searchBox = FJ("#query").get(0);
     let makeAnotherRequest = true; // Variable que controla en CD de búsqueda para no hacer consultas cada que escribe
@@ -81,9 +84,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     //Export
     const exportButton = FJ("#Export").get(0);
-    eventOne("submit", exportButton, async function(e) {
+    eventOne("click", exportButton, async function(e) {
 
-                if (FJ("#ExportQuery").get(0).value == "") e.preventDefault();
+                m.loading(true, "Generando archivo, esto puede tomar varios minutos o hasta horas...")
 
                 const query = FJ("#query").get(0).value;
                 const table = FJ("#table").get(0).value;
@@ -96,24 +99,15 @@ document.addEventListener("DOMContentLoaded", () => {
                 innerWith.each(checkbox => {
                     tablesToInner.push(parseInt(checkbox.value));
                 });
-
-                console.log("asd");
-                
-
-                FJ("#ExportQuery").get(0).value = query;
-                FJ("#ExportTable").get(0).value = table;
-                FJ("#ExportLimit").get(0).value = limit;
-                FJ("#ExportInner").get(0).value = tablesToInner.join(",");
-
-                this.submit();
         
-                /* const data = { query, table, limit, tablesToInner };
-                console.log("Sending");
+                const data = { query, table, limit, tablesToInner };
                 
-                const response = await f.ajax(route("export").url(), "get", data, "text");
+                const response = await f.ajax(route("export").url(), "post", data);
                 console.log(response);
+
+                m.loading(false);
                 
-                window.open(URL.createObjectURL(new Blob([response]))); */
+                window.open(route("download", response).url());
                 
                 
     }, true);

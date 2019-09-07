@@ -5,6 +5,20 @@
 @endsection
 
 @section('content')
+    <div class="modal" id="modal">
+        <div class="modal-main">
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-1 close-modal"></div>
+                <div class="col-lg-6 col-md-6 col-sm-10 col-xs-12 close-modal">
+                    <div class="modal-card" id="loading">
+                        <div class="preloader"></div>
+                        <span class="tag">Cargando...</span>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-1 close-modal"></div>
+            </div>
+        </div>
+    </div>
     <div class="row my-5">
         <div class="col-12 card">
             <div class="card-body">
@@ -87,14 +101,8 @@
                     </table>
                 </div>
                 <div class="row justify-content-center mt-3">
-                    <form action="{{ route("export") }}" method="post" id="Export">
-                        @csrf
-                        <input type="hidden" id="ExportQuery" name="query" value="">
-                        <input type="hidden" id="ExportTable" name="table" value="">
-                        <input type="hidden" id="ExportLimit" name="limit" value="">
-                        <input type="hidden" id="ExportInner" name="tablesToInner" value="">
-                        <button class="btn btn-primary" type="submit">Exportar</button>
-                    </form>
+                    
+                    <button class="btn btn-primary" type="button" id="Export">Exportar</button>
 
                     {{-- @if ($errors->has("notQuery"))
                     <span class="invalid-feedback" role="alert">

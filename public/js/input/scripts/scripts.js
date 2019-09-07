@@ -5,5 +5,13 @@ import swal from 'sweetalert';
 const { eventAll, eventOne } = events;
 
 export const generalScripts = () => {
+    // Ventana modal
 
+    //Cerrar la ventana al hacer click afuera
+    document.addEventListener("click", e => {
+        let _this = e.target;
+        if (_this.classList.contains('close-modal') || _this.classList.contains('modal-main')) m.closeModal();
+    });
+
+    // -> Ventana modal
 }

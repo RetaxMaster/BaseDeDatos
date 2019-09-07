@@ -88,8 +88,17 @@
 
         <button type="button" class="btn btn-primary" id="Import">Importar</button>
 
-        <div class="progress mt-4 hide" id="progress">
-            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">0%</div>
+        <div class="progress-bar-container hide" id="progress">
+            <div class="progress mt-4">
+                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">0%</div><br>
+            </div>
+            <small><b>Nota:</b> El porcentaje de subida no representa el proceso de procesado y creación de tablas.</small>
+        </div>
+        <div class="loading-container loading-hidden mt-3" id="Processing">
+            <div class="loading">
+                <div class="preloader"></div>
+                <span class="tag">Procesando datos y armando las tablas, estoy puede demorar minutos y hasta horas...</span>
+            </div>
         </div>
     </div>
     

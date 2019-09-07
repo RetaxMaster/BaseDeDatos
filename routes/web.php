@@ -19,6 +19,8 @@ Route::get('admin', 'DataController@showAdminPanel')->name('admin');
 
 Route::post('uploadFile', 'DataController@uploadFile')->name('uploadFile');
 
+Route::get('download/{fileName}', 'DataController@download')->name('download');
+
 Route::post('getData', 'DataController@getData')->name('getData');
 
 Route::post('export', 'DataController@export')->name('export');

@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="{{ asset(env("css")."bootstrap.min.css") }}">
     <link rel="stylesheet" href="{{ asset(env("css")."style.css") }}">
     <link rel="stylesheet" href="{{ asset(env("css")."queries.css") }}">
+    <link rel="stylesheet" href="{{ asset(env("css")."modal.css") }}">
     @yield('css', "")
     <title>@yield('title', "Base de datos")</title>
 </head>
