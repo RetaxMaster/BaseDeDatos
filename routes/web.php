@@ -21,6 +21,8 @@ Route::post('uploadFile', 'DataController@uploadFile')->name('uploadFile');
 
 Route::post('getData', 'DataController@getData')->name('getData');
 
+Route::post('export', 'DataController@export')->name('export');
+
 // Rutas de autenticación
 
 // Authentication Routes...

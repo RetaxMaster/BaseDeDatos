@@ -87,7 +87,28 @@
                     </table>
                 </div>
                 <div class="row justify-content-center mt-3">
-                    <button type="button" class="btn btn-primary">Exportar</button>
+                    <form action="{{ route("export") }}" method="post" id="Export">
+                        @csrf
+                        <input type="hidden" id="ExportQuery" name="query" value="">
+                        <input type="hidden" id="ExportTable" name="table" value="">
+                        <input type="hidden" id="ExportLimit" name="limit" value="">
+                        <input type="hidden" id="ExportInner" name="tablesToInner" value="">
+                        <button class="btn btn-primary" type="submit">Exportar</button>
+                    </form>
+
+                    {{-- @if ($errors->has("notQuery"))
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{!! $errors->first("notQuery", ":message") !!}</strong>
+                    </span>
+                    @endif --}}
+                    @error('notQuery')
+                    <div class="alert alert-danger alert-dismissible fade show col-12 mt-3" role="alert">
+                        <strong>{{ $message }}</strong>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    @enderror
                 </div>
             </div>
         </div>

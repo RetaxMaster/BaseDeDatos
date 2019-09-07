@@ -77,9 +77,45 @@ document.addEventListener("DOMContentLoaded", () => {
                 makeAnotherRequest = true;
             }, 1000);
         }
+    }, true);
 
+    //Export
+    const exportButton = FJ("#Export").get(0);
+    eventOne("submit", exportButton, async function(e) {
+
+                if (FJ("#ExportQuery").get(0).value == "") e.preventDefault();
+
+                const query = FJ("#query").get(0).value;
+                const table = FJ("#table").get(0).value;
+                const limit = FJ("#limit").get(0).value;
+                const innerWith = FJ("#InnerWith input[type='checkbox']:checked");
+                const tablesToInner = [];
+
+                //Reviso las tablas que van a relacionarse
+                makeAnotherRequest = true;
+                innerWith.each(checkbox => {
+                    tablesToInner.push(parseInt(checkbox.value));
+                });
+
+                console.log("asd");
+                
+
+                FJ("#ExportQuery").get(0).value = query;
+                FJ("#ExportTable").get(0).value = table;
+                FJ("#ExportLimit").get(0).value = limit;
+                FJ("#ExportInner").get(0).value = tablesToInner.join(",");
+
+                this.submit();
         
-
+                /* const data = { query, table, limit, tablesToInner };
+                console.log("Sending");
+                
+                const response = await f.ajax(route("export").url(), "get", data, "text");
+                console.log(response);
+                
+                window.open(URL.createObjectURL(new Blob([response]))); */
+                
+                
     }, true);
 
 });

@@ -7,8 +7,8 @@ use Illuminate\Support\Facades\Schema;
 
 use App\Classes\RetaxMaster;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\DataExport;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\DB;
 
 use App\Claro;
 use App\Galicia;
@@ -205,7 +205,6 @@ class DataController extends Controller {
         $response["status"] = "true";
         $response["headers"] = $headers;        
         $response["rows"] = $results;
-        $response["eloquentQuery"] = $eloquentQuery;
         return $response;
 
         //respuesta para test
@@ -275,19 +274,46 @@ class DataController extends Controller {
         
     }
 
+    //Exporta los datos de una query
+    //Exporta la lista de productos
+    public function export() {
+        $query = request("query");
+        $table = request("table");
+        $limit = request("limit");
+        $inner = request("tablesToInner");
+
+        if($query == null) return back()->withErrors(["notQuery" => "No se encontró ningún parámetro de búsqueda"]);
+        $inner = ($inner == null) ? "" : explode(",", $inner);
+        if($table == null) $table = "";
+        if($limit == null) $limit = "";
+
+        $export = self::searchData($query, $table, $limit, $inner);
+        return Excel::download(new DataExport($export), 'Export.xlsx');
+    }
+
+    public static function getColumnLetter($num) {
+        $numeric = ($num - 1) % 26;
+        $letter = chr(65 + $numeric);
+        $num2 = intval(($num - 1) / 26);
+        if ($num2 > 0) {
+            return self::getColumnLetter($num2) . $letter;
+        } else {
+            return $letter;
+        }
+    }
+
     //Test Route
     public function test() {
         /* $query = "25585211";
         $table = 1;
         $limit = null;
-        $inner = true;
+        $inner = [];
 
-        $data = self::searchData($query, $table, $limit, $inner);
+        $data = self::searchData($query, $table, $limit, $inner)["rows"]; */
 
-        echo "<pre>";
-        var_dump($data["query"]);
-        echo "</pre>";
-        dd($data["results"]); */
+        dd(self::getColumnLetter(40));
+
+        dd($data);
 
     }
 
