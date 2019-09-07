@@ -29,11 +29,36 @@
                         <label for="limit">Cantidad de registros a traer</label>
                         <input type="text" class="form-control" placeholder="Dejar vacío para traer toda la tabla" id="limit">
                     </div>
-                    <div class="form-group col-12 col-md-6 d-flex">
-                        <div class="align-items-end d-flex">
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="inner">
-                                <label class="custom-control-label" for="inner">Juntar columnas</label>
+                    <div class="form-group col-12">
+                        <span>Juntar con:</span>
+                        <div id="InnerWith">
+                            <div class="custom-control custom-switch custom-control-inline">
+                                <input type="checkbox" class="custom-control-input" id="Claro" value="1">
+                                <label class="custom-control-label" for="Claro">Claro</label>
+                            </div>
+                            <div class="custom-control custom-switch custom-control-inline">
+                                <input type="checkbox" class="custom-control-input" id="Galicia" value="2">
+                                <label class="custom-control-label" for="Galicia">Galicia</label>
+                            </div>
+                            <div class="custom-control custom-switch custom-control-inline">
+                                <input type="checkbox" class="custom-control-input" id="Jubilados" value="3">
+                                <label class="custom-control-label" for="Jubilados">Jubilados</label>
+                            </div>
+                            <div class="custom-control custom-switch custom-control-inline">
+                                <input type="checkbox" class="custom-control-input" id="Macro" value="4">
+                                <label class="custom-control-label" for="Macro">Macro</label>
+                            </div>
+                            <div class="custom-control custom-switch custom-control-inline">
+                                <input type="checkbox" class="custom-control-input" id="Movistar" value="5">
+                                <label class="custom-control-label" for="Movistar">Movistar</label>
+                            </div>
+                            <div class="custom-control custom-switch custom-control-inline">
+                                <input type="checkbox" class="custom-control-input" id="ObrasSociales" value="6">
+                                <label class="custom-control-label" for="ObrasSociales">ObrasSociales</label>
+                            </div>
+                            <div class="custom-control custom-switch custom-control-inline">
+                                <input type="checkbox" class="custom-control-input" id="Personal" value="7">
+                                <label class="custom-control-label" for="Personal">Personal</label>
                             </div>
                         </div>
                     </div>

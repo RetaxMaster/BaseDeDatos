@@ -20,9 +20,16 @@ document.addEventListener("DOMContentLoaded", () => {
                 const query = this.value;
                 const table = FJ("#table").get(0).value;
                 const limit = FJ("#limit").get(0).value;
-                const inner = FJ("#inner").get(0).checked;
+                const innerWith = FJ("#InnerWith input[type='checkbox']:checked");
+                const tablesToInner = [];
+
+                //Reviso las tablas que van a relacionarse
+                makeAnotherRequest = true;
+                innerWith.each(checkbox => {
+                    tablesToInner.push(parseInt(checkbox.value));
+                });
         
-                const data = { query, table, limit, inner };
+                const data = { query, table, limit, tablesToInner };
                 
                 const response = await f.ajax(route("getData").url(), "post", data, "json");
                 console.log(response);

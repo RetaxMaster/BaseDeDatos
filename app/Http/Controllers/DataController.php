@@ -130,7 +130,7 @@ class DataController extends Controller {
         $query = request("query");
         $table = request("table");
         $limit = request("limit");
-        $inner = request("inner");
+        $inner = request("tablesToInner");
 
         return json_encode(self::searchData($query, $table, $limit, $inner));
     }
@@ -162,12 +162,12 @@ class DataController extends Controller {
         $columns = array_merge($columnsPersonas, $columns); // <- Columnas en las que quiero que busque (Array) porque lo recorremos para formar los where
         $columnsToSelect = implode("', '", $columns); // <- Columnas que quiero que me seleccione (string separado por comas)
         
-        //Armo la consulta de Eloqeunt por medio de un string
+        //Armo la consulta de Eloquent por medio de un string
         
         // Si el usuario decidió unirlas
         $innerTables = "";
-        if ($inner) {
-            $userInner = self::innerTables($table, $columnsToSelect);
+        if (!empty($inner)) {
+            $userInner = self::innerTables($table, $columnsToSelect, $inner);
             $innerTables = $userInner["innerTables"];
             $columnsToSelect = $userInner["columns"];
         }
@@ -216,34 +216,34 @@ class DataController extends Controller {
     }
 
     //Este metodo junta las tablas
-    public static function innerTables($table, $columnsToSelect) {
+    public static function innerTables($table, $columnsToSelect, $inner) {
         $innerTables = "";
         $columnsToSelect = explode("', '", $columnsToSelect);
-        if ($table != 1) {
+        if ($table != 1 && in_array(1, $inner)) {
             $innerTables .= "->leftjoin('claros', 'personas.id', '=', 'claros.persona')";
             $columnsToSelect = array_merge($columnsToSelect, self::getColumns("claros", "Claro"));
         }
-        if ($table != 2) {
+        if ($table != 2 && in_array(2, $inner)) {
             $innerTables .= "->leftjoin('galicias', 'personas.id', '=', 'galicias.persona')";
             $columnsToSelect = array_merge($columnsToSelect, self::getColumns("galicias", "Galicia"));
         }
-        if ($table != 3) {
+        if ($table != 3 && in_array(3, $inner)) {
             $innerTables .= "->leftjoin('jubilados', 'personas.id', '=', 'jubilados.persona')";
             $columnsToSelect = array_merge($columnsToSelect, self::getColumns("jubilados", "Jubilados"));
         }
-        if ($table != 4) {
+        if ($table != 4 && in_array(4, $inner)) {
             $innerTables .= "->leftjoin('macros', 'personas.id', '=', 'macros.persona')";
             $columnsToSelect = array_merge($columnsToSelect, self::getColumns("macros", "Macro"));
         }
-        if ($table != 5) {
+        if ($table != 5 && in_array(5, $inner)) {
             $innerTables .= "->leftjoin('movistars', 'personas.id', '=', 'movistars.persona')";
             $columnsToSelect = array_merge($columnsToSelect, self::getColumns("movistars", "Movistar"));
         }
-        if ($table != 6) {
+        if ($table != 6 && in_array(6, $inner)) {
             $innerTables .= "->leftjoin('obras_sociales', 'personas.id', '=', 'obras_sociales.persona')";
             $columnsToSelect = array_merge($columnsToSelect, self::getColumns("obras_sociales", "ObrasSociales"));
         }
-        if ($table != 7) {
+        if ($table != 7 && in_array(7, $inner)) {
             $innerTables .= "->leftjoin('personals', 'personas.id', '=', 'personals.persona')";
             $columnsToSelect = array_merge($columnsToSelect, self::getColumns("personals", "Personal"));
         }
@@ -277,7 +277,7 @@ class DataController extends Controller {
 
     //Test Route
     public function test() {
-        $query = "25585211";
+        /* $query = "25585211";
         $table = 1;
         $limit = null;
         $inner = true;
@@ -287,7 +287,7 @@ class DataController extends Controller {
         echo "<pre>";
         var_dump($data["query"]);
         echo "</pre>";
-        dd($data["results"]);
+        dd($data["results"]); */
 
     }
 
